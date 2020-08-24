@@ -12,3 +12,9 @@ http://your-host-domain/api/v1/tasks
 - PUT
 - DELETE
 
+##Features Available
+|Version | Description|
+|:------:|------------|
+| 0.0.1 | Core functionality added
+|0.0.2 | Added Error Handling 
+

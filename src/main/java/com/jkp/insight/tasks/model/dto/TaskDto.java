@@ -12,5 +12,5 @@ import lombok.experimental.Accessors;
 public class TaskDto {
     public Integer id;
     public String name;
-    public Boolean isComplete;
+    public Boolean isComplete = false;
 }
