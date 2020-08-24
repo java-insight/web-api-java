@@ -1,5 +1,8 @@
 package com.jkp.insight.tasks.service.impl;
 
+import com.jkp.insight.tasks.exception.ErrorMessages;
+import com.jkp.insight.tasks.exception.TaskException;
+import com.jkp.insight.tasks.exception.ValidationException;
 import com.jkp.insight.tasks.model.dto.TaskDto;
 import com.jkp.insight.tasks.model.entity.Task;
 import com.jkp.insight.tasks.model.mapper.TaskMapper;
@@ -22,35 +25,43 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public List<TaskDto> getAllTasks() {
         List<Task> taskList = taskRepository.findAll();
-        List<TaskDto> taskDtoList = taskList.stream().map(t -> taskMapper.toTaskDto(t)).collect(Collectors.toList());
-        return taskDtoList;
+        return taskList.stream().map(t -> taskMapper.toTaskDto(t)).collect(Collectors.toList());
     }
 
     @Override
+    public List<TaskDto> searchTask(String name) {
+        List<Task> taskList = taskRepository.findByName(name);
+        return taskList.stream().map(t -> taskMapper.toTaskDto(t)).collect(Collectors.toList());
+    }
+    @Override
     public TaskDto getTask(Integer id) {
-        Task task = taskRepository.getOne(id);
-        //TODO: Check the object exists, if not throw Exception
+        Task task = taskRepository.findById(id).
+                orElseThrow(new TaskException(String.format(ErrorMessages.TASK_NOT_EXISTS,id)));
         return taskMapper.toTaskDto(task);
     }
 
     @Override
     public TaskDto createTask(TaskDto taskDto) {
-        Task task = taskMapper.toTask(taskDto);
-        return taskMapper.toTaskDto(taskRepository.saveAndFlush(task));
+        if (taskDto.getName() != null) {
+            Task task = taskMapper.toTask(taskDto);
+            return taskMapper.toTaskDto(taskRepository.saveAndFlush(task));
+        } else {
+            throw new ValidationException("Failed to create Task. Task Name is Null or Empty.");
+        }
     }
 
     @Override
     public TaskDto updateTask(Integer id, TaskDto taskDto) {
-        Task task = taskRepository.getOne(id);
-        //TODO: Check the object exists, if not throw Exception
+        Task task = taskRepository.findById(id).
+                orElseThrow(new TaskException(String.format(ErrorMessages.TASK_NOT_EXISTS,id)));
         task = taskMapper.updateTask(taskDto,task);
         return taskMapper.toTaskDto(taskRepository.saveAndFlush(task));
+
     }
 
     @Override
     public void deleteTask(Integer id) {
-        Task task = taskRepository.getOne(id);
-        //TODO: Check the object exists, if not throw Exception
+        Task task = taskRepository.findById(id).orElseThrow(new TaskException(String.format(ErrorMessages.TASK_NOT_EXISTS,id)));
         taskRepository.deleteById(id);
     }
 }

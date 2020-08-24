@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 public class TaskMapper {
     public Task toTask(TaskDto taskDto){
         Task task = new Task();
-        System.out.println("TASK MAPPER");
-        System.out.println(taskDto);
         BeanUtils.copyProperties(taskDto,task);
         return task;
 
