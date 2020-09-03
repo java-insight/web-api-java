@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jkp.insight</groupId>
-	<artifactId>micro-service-java</artifactId>
-	<version>0.0.2</version>
+	<artifactId>web-api-java</artifactId>
+	<version>0.0.3</version>
 	<packaging>war</packaging>
-	<name>micro-service</name>
+	<name>web-api-java</name>
 	<description>Demo project for Micro service architecture with Spring Boot</description>
 
 	<properties>

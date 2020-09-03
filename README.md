@@ -1,4 +1,4 @@
-# micro-service-java
+# web-api-java
 This is a reference application to impplement micro-services in Java.
 
 ### APIs
@@ -16,5 +16,6 @@ http://your-host-domain/api/v1/tasks
 |Version | Description|
 |:------:|------------|
 | 0.0.1 | Core functionality added
-|0.0.2 | Added Error Handling 
+|0.0.2 | Added Error Handling
+|0.0.3 | Enabled CORS 
 

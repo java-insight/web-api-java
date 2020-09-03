@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/api/v1/tasks")
 /*
@@ -28,6 +29,7 @@ public class TaskController {
 
     @GetMapping
     public ResponseEntity<List<TaskDto>> getTasks() {
+        //System.out.println("READ ALL Task: Req received");
         return new ResponseEntity(taskService.getAllTasks(),HttpStatus.OK);
     }
 
@@ -40,8 +42,10 @@ public class TaskController {
         }
     }
 
-    @PostMapping(consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
-    public ResponseEntity<TaskDto> createTask(final TaskDto taskDto) {
+    @PostMapping(consumes = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<TaskDto> createTask(@RequestBody final TaskDto taskDto) {
+        //System.out.println("CREATETask: Req received");
+        //System.out.println(taskDto);
         return new ResponseEntity(taskService.createTask(taskDto), HttpStatus.CREATED);
     }
 
@@ -51,13 +55,14 @@ public class TaskController {
         return new ResponseEntity(taskService.readTask(id), HttpStatus.OK);
     }
 
-    @PutMapping(value = "{id}", consumes = {MediaType.APPLICATION_FORM_URLENCODED_VALUE})
+    @PutMapping(value = "{id}", consumes = {MediaType.APPLICATION_JSON_VALUE})
     public ResponseEntity<TaskDto> updateTask(@PathVariable final Integer id, final TaskDto taskDto) {
         return new ResponseEntity(taskService.updateTask(id, taskDto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteTask(@PathVariable final Integer id) {
+        //System.out.println("DELETE Task: Req received");
         taskService.deleteTask(id);
         return new ResponseEntity<String>("Task Deleted.", HttpStatus.OK);
     }
