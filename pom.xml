@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.jkp.insight</groupId>
 	<artifactId>web-api-java</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 	<packaging>war</packaging>
 	<name>web-api-java</name>
 	<description>Demo project for Micro service architecture with Spring Boot</description>
